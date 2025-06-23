@@ -5,11 +5,7 @@ import Link from "next/link";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
 
-type Props = {
-  params: {
-    project: string;
-  };
-}
+// Types are inferred by Next.js
 
 interface ProjectDetail {
   label: string;
@@ -102,7 +98,7 @@ export async function generateStaticParams() {
 // Generate metadata for the page
 export async function generateMetadata({ 
   params 
-}: Props): Promise<Metadata> {
+}: { params: { project: string } }): Promise<Metadata> {
   const project = projects.find((p) => p.slug === params.project);
   
   if (!project) {
