@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://extendia.co.uk/sitemap.xml

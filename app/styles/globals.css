@@ -1,0 +1,278 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    /* Base theme */
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+
+    /* Brand colors in HSL */
+    --brand: 221.5 72.8% 32.9%;
+    --brand-light: 221.2 83.2% 53.3%;
+    --brand-dark: 221.7 66.3% 40.2%;
+
+    /* Accent colors */
+    --accent: 161.4 93.5% 30.4%;
+    --accent-light: 162.9 84.1% 39.4%;
+    --accent-dark: 161.4 93.5% 24.3%;
+
+    /* Neutral shades */
+    --neutral: 220 8.9% 46.1%;
+    --neutral-50: 210 20% 98%;
+    --neutral-100: 220 14.3% 95.9%;
+    --neutral-200: 220 13% 91%;
+    --neutral-300: 216 12.2% 83.9%;
+    --neutral-400: 217.9 10.6% 64.9%;
+    --neutral-500: 220 8.9% 46.1%;
+    --neutral-600: 215.4 13.8% 34.1%;
+    --neutral-700: 216.9 19.1% 26.7%;
+    --neutral-800: 215 27.9% 16.9%;
+    --neutral-900: 220.9 39.3% 11%;
+
+    /* Component colors */
+    --card: 0 0% 100%;
+    --card-foreground: var(--foreground);
+
+    --popover: 0 0% 100%;
+    --popover-foreground: var(--foreground);
+
+    --primary: var(--brand);
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: var(--brand);
+
+    --muted: var(--neutral-100);
+    --muted-foreground: var(--neutral-500);
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* UI elements */
+    --border: var(--neutral-200);
+    --input: var(--neutral-200);
+    --ring: var(--brand);
+
+    /* Border radius */
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark mode adjustments */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    /* Dark mode component colors */
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: var(--brand-light);
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: var(--accent-light);
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Dark mode UI elements */
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: var(--brand-light);
+  }
+}
+ 
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-family: var(--font-body);
+  }
+
+  /* Typography styles */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 3rem;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.25rem;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+
+  h4 {
+    font-size: 2rem;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+  }
+
+  h5 {
+    font-size: 1.75rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+  }
+
+  h6 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  /* Link styles */
+  a {
+    color: hsl(var(--brand));
+    transition: color 0.2s ease-in-out;
+  }
+
+  a:hover {
+    color: hsl(var(--brand-light));
+  }
+
+  /* Focus styles */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Selection styles */
+  ::selection {
+    background-color: hsl(var(--brand));
+    color: hsl(var(--primary-foreground));
+  }
+}
+
+/* Component styles */
+@layer components {
+  /* Button base styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  }
+
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+  }
+
+  .btn-primary {
+    background-color: hsl(var(--brand));
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background-color: hsl(var(--brand-light));
+  }
+
+  .btn-secondary {
+    background-color: hsl(var(--neutral-100));
+    color: hsl(var(--neutral-900));
+  }
+
+  .btn-secondary:hover {
+    background-color: hsl(var(--neutral-200));
+  }
+
+  .btn-outline {
+    border: 2px solid hsl(var(--brand));
+    color: hsl(var(--brand));
+    background-color: transparent;
+  }
+
+  .btn-outline:hover {
+    background-color: hsl(var(--brand));
+    color: white;
+  }
+
+  /* Form input styles */
+  .input {
+    width: 100%;
+    border-radius: 0.5rem;
+    border: 1px solid hsl(var(--neutral-200));
+    background-color: white;
+    padding: 0.5rem 1rem;
+    color: hsl(var(--neutral-900));
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+
+  .input:focus-visible {
+    outline: none;
+    border-color: hsl(var(--brand));
+    box-shadow: 0 0 0 2px hsl(var(--brand-light) / 0.2);
+  }
+
+  .input::placeholder {
+    color: hsl(var(--neutral-400));
+  }
+
+  /* Card styles */
+  .card {
+    border-radius: 0.75rem;
+    border: 1px solid hsl(var(--neutral-200));
+    background-color: white;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease-in-out;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  /* Add when browser support improves */
+  /*.text-balance {
+    text-wrap: balance;
+  }*/
+}
