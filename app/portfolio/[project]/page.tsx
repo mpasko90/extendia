@@ -5,20 +5,26 @@ import Link from "next/link";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
 
+type Props = {
+  params: {
+    project: string;
+  };
+}
+
 interface ProjectDetail {
-    label: string;
-    value: string;
+  label: string;
+  value: string;
 }
 
 interface Project {
-    slug: string;
-    title: string;
-    description: string;
-    imageUrl: string;
-    category: string;
-    area: string;
-    details: ProjectDetail[];
-    gallery?: string[];
+  slug: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  category: string;
+  area: string;
+  details: ProjectDetail[];
+  gallery?: string[];
 }
 
 // Project data (in a real app, this would come from a CMS or API)
@@ -82,10 +88,8 @@ const projects: Project[] = [
     },
 ];
 
-interface PageProps {
-    params: {
-        project: string;
-    };
+function getProjectData(slug: string): Project | undefined {
+  return projects.find(project => project.slug === slug);
 }
 
 // Generate static params for all projects
@@ -98,7 +102,7 @@ export async function generateStaticParams() {
 // Generate metadata for the page
 export async function generateMetadata({ 
   params 
-}: PageProps): Promise<Metadata> {
+}: Props): Promise<Metadata> {
   const project = projects.find((p) => p.slug === params.project);
   
   if (!project) {
@@ -125,8 +129,7 @@ export default async function ProjectPage({
 }: { 
   params: { project: string } 
 }) {
-  // In a real app, you would fetch this data from an API
-  const project = projects.find((p) => p.slug === params.project);
+  const project = getProjectData(params.project);
 
   if (!project) {
     return <div className="container mx-auto text-center py-20">Project not found.</div>;

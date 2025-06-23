@@ -1,4 +1,4 @@
-import { type CLSMetric, type FCPMetric, type FIDMetric, type LCPMetric, type TTFBMetric } from 'web-vitals';
+import { type Metric } from 'web-vitals';
 
 interface WebVitalMetric {
   id: string;
@@ -8,7 +8,7 @@ interface WebVitalMetric {
   entries: PerformanceEntry[];
 }
 
-export function reportWebVitals(metric: CLSMetric | FCPMetric | FIDMetric | LCPMetric | TTFBMetric): void {
+export function reportWebVitals(metric: Metric): void {
   // Send metrics to your analytics service
   console.log(metric);
 

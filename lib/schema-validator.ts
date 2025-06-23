@@ -1,11 +1,18 @@
 import { Schema, sanitize, validate } from 'schema-inspector';
 
-type ValidationResult = {
+interface ValidationResult {
   valid: boolean;
-  errors?: string[];
-};
+  errors: string[];
+}
 
-const schemaValidators = {
+type SchemaDefinition = {
+  type: string;
+  properties: Record<string, Schema>;
+  eq?: string;
+  required?: boolean;
+}
+
+const schemaValidators: Record<string, SchemaDefinition> = {
   project: {
     type: 'object',
     properties: {
@@ -54,14 +61,14 @@ export function validateSchema(data: unknown, schemaType: keyof typeof schemaVal
 
   const validation = validate(schema, data);
   
-  if (!validation.valid) {
-    return {
-      valid: false,
-      errors: validation.format()
-    };
-  }
-
-  return { valid: true };
+  return {
+    valid: validation.valid,
+    errors: validation.valid ? [] : (
+      Array.isArray(validation.error) 
+        ? validation.error.map(err => `${err.property}: ${err.message}`)
+        : ['Unknown validation error']
+    )
+  };
 }
 
 export function sanitizeSchema(data: unknown, schemaType: keyof typeof schemaValidators): unknown {
@@ -70,6 +77,8 @@ export function sanitizeSchema(data: unknown, schemaType: keyof typeof schemaVal
   if (!schema) {
     throw new Error(`Schema type '${schemaType}' not found`);
   }
+  
+  return sanitize(schema as Schema, data).data;
 
   return sanitize(schema, data).data;
 }
