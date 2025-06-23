@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from 'next';
 import { Montserrat } from 'next/font/google';
 import { Open_Sans as OpenSans } from 'next/font/google';
@@ -146,25 +147,32 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={cn(
+        'light',
+        fontDisplay.variable,
+        fontBody.variable
+      )}
+      suppressHydrationWarning
+    >
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontDisplay.variable,
-          fontBody.variable
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          disableTransitionOnChange
+        >
           <Header />
           {children}
           <Footer />
           <Toaster />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
