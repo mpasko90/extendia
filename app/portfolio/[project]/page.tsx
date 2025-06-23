@@ -96,42 +96,44 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for the page
-export async function generateMetadata({ 
-  params 
-}: { params: { project: string } }): Promise<Metadata> {
-  const project = projects.find((p) => p.slug === params.project);
-  
-  if (!project) {
-    return {
-      title: "Project Not Found",
-      description: "The requested project could not be found."
-    };
-  }
-  
-  return {
-    title: project.title,
-    description: project.description,
-    openGraph: {
-      title: project.title,
-      description: project.description,
-      images: [{ url: project.imageUrl }],
-    },
-  };
-}
+export async function generateMetadata({
+  params
+}: { params: Promise<{ project: string }> }): Promise<Metadata> {
+  const { project: projectParam } = await params;
+  const project = projects.find((p) => p.slug === projectParam);
+   
+   if (!project) {
+     return {
+       title: "Project Not Found",
+       description: "The requested project could not be found."
+     };
+   }
+   
+   return {
+     title: project.title,
+     description: project.description,
+     openGraph: {
+       title: project.title,
+       description: project.description,
+       images: [{ url: project.imageUrl }],
+     },
+   };
+ }
 
 // The page component must be async for Next.js 15 dynamic routes
-export default async function ProjectPage({ 
-  params 
-}: { 
-  params: { project: string } 
+export default async function ProjectPage({
+  params
+}: {
+  params: Promise<{ project: string }>
 }) {
-  const project = getProjectData(params.project);
+  const { project: projectParam } = await params;
+  const project = getProjectData(projectParam);
 
-  if (!project) {
-    return <div className="container mx-auto text-center py-20">Project not found.</div>;
-  }
+   if (!project) {
+     return null; // Or your 404 component
+   }
 
-  return (
+   return (
     <div className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
         <div className="mb-8">
             <Link href="/portfolio" className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
