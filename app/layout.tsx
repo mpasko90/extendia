@@ -5,6 +5,7 @@ import { Open_Sans as OpenSans } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Header } from '@/components/header';
+import { TrustBanner } from '@/components/trust-banner';
 import { Footer } from '@/components/footer';
 import SkipToContent from '@/components/skip-to-content';
 import { HydrationCheck } from '@/components/hydration-check';
@@ -169,9 +170,9 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-        >
-          <HydrationCheck />
+        >          <HydrationCheck />
           <SkipToContent />
+          <TrustBanner />
           <Header />
           <main id="main-content">{children}</main>
           <Footer />

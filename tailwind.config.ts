@@ -125,8 +125,7 @@ const config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-      },
-      keyframes: {
+      },      keyframes: {
         'accordion-down': {
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
@@ -143,13 +142,32 @@ const config = {
           '100%': {
             'offset-distance': '100%',
           },
+        },        marquee: {
+          from: { transform: 'translateX(0%)' },
+          to: { transform: 'translateX(-100%)' },
+        },
+        'marquee-vertical': {
+          from: { transform: 'translateY(0%)' },
+          to: { transform: 'translateY(-100%)' },
+        },
+        orbit: {
+          '0%': {
+            transform:
+              'rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)',
+          },
+          '100%': {
+            transform:
+              'rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)',
+          },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         shine: 'shine 8s linear infinite',
-        'border-beam': 'border-beam 5s infinite linear',
+        'border-beam': 'border-beam 5s infinite linear',        marquee: 'marquee var(--duration) linear infinite',
+        'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+        orbit: 'orbit calc(var(--duration) * 1s) linear infinite',
       },
     },
   },
