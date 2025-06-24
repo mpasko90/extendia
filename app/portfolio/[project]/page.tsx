@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeftIcon } from '@heroicons/react/solid';
+import { ArrowLeft } from "lucide-react";
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
 
@@ -113,7 +113,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ projec
     <div className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
       <div className="mb-8">
         <Link href="/portfolio" className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
-          <ArrowLeftIcon className="h-4 w-4 mr-2" />
+          <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Portfolio
         </Link>
       </div>
