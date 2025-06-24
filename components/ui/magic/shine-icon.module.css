@@ -1,0 +1,57 @@
+.shineIcon {
+  --mouse-x: 0px;
+  --mouse-y: 0px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 9999px;
+  padding: 0.5rem;
+  transition-property: background-color, border-color, color, fill, stroke;
+}
+
+.shineIcon:hover,
+.shineIcon:focus-visible {
+  background-color: hsl(var(--accent));
+}
+
+.shineIcon:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--primary));
+}
+
+.shineOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 150ms;
+}
+
+.shineIcon:hover .shineOverlay {
+  opacity: 1;
+}
+
+.shineGradient {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 300ms;
+  background: linear-gradient(to right,
+    transparent,
+    color-mix(in srgb, hsl(var(--accent-foreground)) 10%, transparent),
+    transparent
+  );
+}
+
+.shineIcon:hover .shineGradient {
+  opacity: 1;
+}
+
+.shineMask {
+  -webkit-mask-image: radial-gradient(30px circle at var(--mouse-x) var(--mouse-y), black, transparent);
+  mask-image: radial-gradient(30px circle at var(--mouse-x) var(--mouse-y), black, transparent);
+}
+
+.shineIcon:hover .shineGradient {
+  opacity: 1;
+}
