@@ -1,11 +1,9 @@
-import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
-
-// Types are inferred by Next.js
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeftIcon } from "lucide-react";
 
 interface ProjectDetail {
   label: string;
@@ -95,100 +93,114 @@ export async function generateStaticParams() {
   }));
 }
 
-// Generate metadata for the page
+// Generate metadata for the page with proper Promise handling
 export async function generateMetadata({
-  params
-}: { params: Promise<{ project: string }> }): Promise<Metadata> {
-  const { project: projectParam } = await params;
+  params: rawParams 
+}: {
+  params: { project: Promise<string> | string }
+}): Promise<Metadata> {
+  // Handle both Promise and direct string values
+  const projectParam = typeof rawParams.project === 'string' 
+    ? rawParams.project 
+    : await rawParams.project;
+    
   const project = projects.find((p) => p.slug === projectParam);
    
-   if (!project) {
-     return {
-       title: "Project Not Found",
-       description: "The requested project could not be found."
-     };
-   }
+  if (!project) {
+    return {
+      title: "Project Not Found",
+      description: "The requested project could not be found."
+    };
+  }
    
-   return {
-     title: project.title,
-     description: project.description,
-     openGraph: {
-       title: project.title,
-       description: project.description,
-       images: [{ url: project.imageUrl }],
-     },
-   };
- }
+  return {
+    title: `${project.title} | Extendia Construction Projects`,
+    description: project.description,
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      images: [{ url: project.imageUrl }],
+    },
+  };
+}
 
-// The page component must be async for Next.js 15 dynamic routes
+// The page component with proper Next.js 15 async params handling
 export default async function ProjectPage({
-  params
+  params: rawParams
 }: {
-  params: Promise<{ project: string }>
+  params: { project: Promise<string> | string }
 }) {
-  const { project: projectParam } = await params;
-  const project = getProjectData(projectParam);
+  // Handle both Promise and direct string values
+  const projectParam = typeof rawParams.project === 'string' 
+    ? rawParams.project 
+    : await rawParams.project;
+    
+  const projectData = getProjectData(projectParam);
 
-   if (!project) {
-     return null; // Or your 404 component
-   }
+  if (!projectData) {
+    notFound();
+  }
 
-   return (
+  // After notFound(), projectData is guaranteed to be defined
+  const project: Project = projectData;
+
+  return (
     <div className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
-        <div className="mb-8">
-            <Link href="/portfolio" className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
-                <ArrowLeftIcon className="h-4 w-4 mr-2" />
-                Back to Portfolio
-            </Link>
-        </div>
+      <div className="mb-8">
+        <Link href="/portfolio" className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+          <ArrowLeftIcon className="h-4 w-4 mr-2" />
+          Back to Portfolio
+        </Link>
+      </div>
 
       <header className="text-center mb-12">
         <Badge variant="secondary" className="mb-2">{project.category}</Badge>
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-50 sm:text-5xl">
+        <h1 className="text-4xl font-bold mb-4">
           {project.title}
         </h1>
-        <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600 dark:text-gray-400">
+        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
           {project.description}
         </p>
       </header>
 
-      <div className="relative h-96 w-full overflow-hidden rounded-lg mb-12 md:h-[500px]">
-          <Image 
-            src={project.imageUrl} 
-            alt={`Main image for ${project.title}`} 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+        <div className="relative aspect-video">
+          <Image
+            src={project.imageUrl}
+            alt={`Main image for ${project.title}`}
             fill
-            className="object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+            className="object-cover rounded-lg shadow-lg"
             priority
           />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-        <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold mb-4">Project Gallery</h2>
-            <div className="grid grid-cols-2 gap-4">
-                {project.gallery?.map((image, index) => (
-                    <div key={index} className="relative h-64 w-full overflow-hidden rounded-lg">
-                        <Image 
-                            src={image} 
-                            alt={`Gallery image ${index + 1} for ${project.title}`} 
-                            fill
-                            className="object-cover transition-transform duration-300 ease-in-out hover:scale-105"
-                        />
-                    </div>
-                ))}
-            </div>
         </div>
-        <div>
-            <h2 className="text-2xl font-bold mb-4">Project Details</h2>
-            <div className="space-y-4">
-                {project.details.map((detail, index) => (
-                    <div key={index}>
-                        <p className="font-semibold text-gray-800 dark:text-gray-200">{detail.label}</p>
-                        <p className="text-gray-600 dark:text-gray-400">{detail.value}</p>
-                        <Separator className="my-4"/>
-                    </div>
-                ))}
-            </div>
+
+        <div className="space-y-8">
+          {/* Gallery */}
+          <div className="grid grid-cols-2 gap-4">
+            {project.gallery?.map((image, index) => (
+              <div key={index} className="relative aspect-square">
+                <Image
+                  src={image}
+                  alt={`Gallery image ${index + 1} for ${project.title}`}
+                  fill
+                  className="object-cover rounded-lg shadow-sm"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Project Details */}
+          <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+            <h2 className="text-xl font-semibold mb-4">Project Details</h2>
+            <dl className="space-y-4">
+              {project.details.map((detail, index) => (
+                <div key={index} className="flex justify-between">
+                  <dt className="font-medium text-gray-600 dark:text-gray-400">{detail.label}</dt>
+                  <dd>{detail.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </div>
     </div>

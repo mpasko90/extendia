@@ -7,6 +7,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { HydrationCheck } from '@/components/hydration-check';
 import '@/app/styles/globals.css';
 
 const fontDisplay = Montserrat({
@@ -162,17 +163,25 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>
+      <body
+        className={cn(
+          'min-h-screen bg-background antialiased',
+          fontDisplay.variable,
+          fontBody.variable,
+        )}
+      >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
+          <HydrationCheck />
           <Header />
           {children}
           <Footer />
-          <Toaster />
           <SpeedInsights />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

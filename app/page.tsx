@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { 
   Quote, 
   Facebook, 
@@ -15,8 +14,16 @@ import {
   ArrowRight
 } from 'lucide-react';
 
-// Shadcn UI Components
+// Form Components
+import { HydrationSafeInput } from "@/components/ui/hydration-safe-input";
+import { HydrationSafeTextarea } from "@/components/ui/hydration-safe-textarea";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+
+// State Management
+import { useState } from "react";
+
+// Shadcn UI Components
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -32,9 +39,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ProjectCard } from "@/components/ui/project-card";
 import { ImageFallback } from "@/components/ui/image-fallback";
 
@@ -274,6 +278,90 @@ const FeaturedProjectCard = ({ project }: { project: Project }) => {
     </>
   );
 };
+
+// Contact Form Component
+function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    projectType: "",
+    message: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.id]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add form submission logic here
+    console.log("Form submitted:", formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <Label htmlFor="name">Full Name</Label>
+        <HydrationSafeInput
+          id="name"
+          type="text"
+          placeholder="Your Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <Label htmlFor="email">Email Address</Label>
+        <HydrationSafeInput
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div>
+        <Label htmlFor="phone">Phone Number</Label>
+        <HydrationSafeInput
+          id="phone"
+          type="tel"
+          placeholder="Your Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <Label htmlFor="projectType">Project Type</Label>
+        <HydrationSafeInput
+          id="projectType"
+          type="text"
+          placeholder="e.g., House Extension, Loft Conversion"
+          value={formData.projectType}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <Label htmlFor="message">Project Details</Label>
+        <HydrationSafeTextarea
+          id="message"
+          placeholder="Tell us about your project"
+          value={formData.message}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <Button type="submit" variant="secondary" size="lg" className="w-full">
+        Request Consultation
+      </Button>
+    </form>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -539,30 +627,7 @@ export default function HomePage() {
               <h3 className="text-2xl font-bold mb-4">
                 Request a Free Consultation
               </h3>
-              <form className="space-y-4">
-                <div>
-                  <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" type="text" placeholder="Your Name" />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" placeholder="you@example.com" />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Phone Number</Label>
-                  <Input id="phone" type="tel" placeholder="07123 456789" />
-                </div>
-                <div>
-                  <Label htmlFor="message">Your Message</Label>
-                  <Textarea
-                    id="message"
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-                <Button type="submit" size="lg" className="w-full">
-                  Send Message
-                </Button>
-              </form>
+              <ContactForm />
             </div>
             <div className="space-y-6">
               <h3 className="text-2xl font-bold mb-4">Contact Details</h3>
