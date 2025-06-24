@@ -1,0 +1,66 @@
+.shimmerButton {
+  --spread: 90deg;
+  --shimmer-color: #ffffff;
+  --radius: 100px;
+  --speed: 3s;
+  --cut: 0.05em;
+  --bg: rgba(0, 0, 0, 1);
+  
+  position: relative;
+  z-index: 0;
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1.5rem;
+  color: white;
+  background: var(--bg);
+  border-radius: var(--radius);
+  transform: translateZ(0);
+  transition: transform 300ms ease-in-out;
+}
+
+.shimmerButton:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-color-scheme: dark) {
+  .shimmerButton {
+    color: black;
+  }
+}
+
+.shimmerButton::before,
+.shimmerButton::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: conic-gradient(from var(--spread) at 50% 50%, var(--shimmer-color), transparent 25%);
+  transform: translate(-100%, -100%);
+  animation: rotate var(--speed) linear infinite;
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.shimmerButton::after {
+  transform: translate(100%, 100%);
+  animation-delay: calc(var(--speed) * -0.5);
+}
+
+.shimmerButton:hover::before,
+.shimmerButton:hover::after {
+  opacity: 1;
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-100%, -100%) rotate(0deg);
+  }
+  to {
+    transform: translate(-100%, -100%) rotate(360deg);
+  }
+}

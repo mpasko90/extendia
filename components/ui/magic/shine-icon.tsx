@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import styles from "./shine-icon.module.css";
 
 interface ShineIconProps {
@@ -17,7 +17,6 @@ export function ShineIcon({
   className = "",
   ariaLabel,
 }: ShineIconProps) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const buttonRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
@@ -26,18 +25,16 @@ export function ShineIcon({
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = button.getBoundingClientRect();
-      setPosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      button.style.setProperty("--mouse-x", x.toString());
+      button.style.setProperty("--mouse-y", y.toString());
     };
 
     button.addEventListener("mousemove", handleMouseMove);
     return () => button.removeEventListener("mousemove", handleMouseMove);
-  }, []);  const buttonStyle = {
-    "--mouse-x": `${position.x}px`,
-    "--mouse-y": `${position.y}px`,
-  } as React.CSSProperties;
+  }, []);
 
   return (
     <a
@@ -47,7 +44,6 @@ export function ShineIcon({
       rel="noopener noreferrer"
       className={cn(styles.shineIcon, className)}
       aria-label={ariaLabel}
-      style={buttonStyle}
     >
       {children}
       <div className={styles.shineOverlay}>

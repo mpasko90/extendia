@@ -4,9 +4,9 @@ import { Montserrat } from 'next/font/google';
 import { Open_Sans as OpenSans } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
-import { Toaster } from '@/components/ui/sonner';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import SkipToContent from '@/components/skip-to-content';
 import { HydrationCheck } from '@/components/hydration-check';
 import '@/app/styles/globals.css';
 
@@ -171,11 +171,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <HydrationCheck />
+          <SkipToContent />
           <Header />
-          {children}
+          <main id="main-content">{children}</main>
           <Footer />
           <SpeedInsights />
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>

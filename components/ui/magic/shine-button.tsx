@@ -1,14 +1,18 @@
+"use client";
+
+import { ButtonHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
+
+interface ShineButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children: React.ReactNode;
+  className?: string;
+}
 
 export const ShineButton = ({
   children,
   className,
   ...props
-}: {
-  children: React.ReactNode;
-  className?: string;
-  [key: string]: any;
-}) => {
+}: ShineButtonProps) => {
   return (
     <button
       className={cn(
