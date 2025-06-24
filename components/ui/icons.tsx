@@ -5,12 +5,35 @@ import { cn } from "@/lib/utils"
 
 import {
   ArrowLeft,
+  Building2,
+  Star,
+  Shield,
+  Award,
+  Phone,
+  Menu,
+  X,
+  MapPin,
+  Settings,
+  Users,
+  Wrench,
+  Zap,
   type LucideIcon,
 } from "lucide-react"
 
 export const Icons = {
   arrowLeft: ArrowLeft,
-  // Add more icons as needed
+  building: Building2,
+  star: Star,
+  shield: Shield,
+  award: Award,
+  phone: Phone,
+  menu: Menu,
+  close: X,
+  mapPin: MapPin,
+  settings: Settings,
+  users: Users,
+  wrench: Wrench,
+  zap: Zap,
 }
 
 export type IconProps = React.ComponentPropsWithoutRef<typeof ArrowLeft>;
