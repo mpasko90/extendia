@@ -59,19 +59,28 @@ const schemaValidators: Record<string, SchemaDefinition> = {
 
 export function validateSchema(data: unknown, schemaType: keyof typeof schemaValidators): ValidationResult {
   const schema = schemaValidators[schemaType];
-  
+
   if (!schema) {
     return {
       valid: false,
-      errors: [`Schema type '${schemaType}' not found`]
+      errors: [{
+        property: 'schemaType',
+        message: `Schema type '${schemaType}' not found`
+      }],
+      errorMessages: [`Schema type '${schemaType}' not found`]
     };
   }
 
   const validation = validate(schema, data);
-  
+
   return {
     valid: validation.valid,
     errors: validation.valid ? [] : (
+      Array.isArray(validation.error) 
+        ? validation.error.map(err => ({ property: err.property, message: err.message }))
+        : [{ property: 'unknown', message: 'Unknown validation error' }]
+    ),
+    errorMessages: validation.valid ? [] : (
       Array.isArray(validation.error) 
         ? validation.error.map(err => `${err.property}: ${err.message}`)
         : ['Unknown validation error']
@@ -81,12 +90,10 @@ export function validateSchema(data: unknown, schemaType: keyof typeof schemaVal
 
 export function sanitizeSchema(data: unknown, schemaType: keyof typeof schemaValidators): unknown {
   const schema = schemaValidators[schemaType];
-  
+
   if (!schema) {
     throw new Error(`Schema type '${schemaType}' not found`);
   }
-  
-  return sanitize(schema as Schema, data).data;
 
   return sanitize(schema, data).data;
 }

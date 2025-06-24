@@ -106,3 +106,9 @@ Components can be customized through:
 2. Global configuration in magicui.config.ts
 3. CSS/Tailwind classes for styling
 4. CSS variables for dynamic values
+
+## Recent Updates
+
+### TypeScript Enhancements
+- Fixed type issues in `marquee.tsx`.
+- Added support for `direction` types: `normal` and `reverse`.
