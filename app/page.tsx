@@ -1,14 +1,19 @@
 "use client";
 
 import * as React from "react";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { ServicesSection } from "@/components/sections/ServicesSection";
-import { JourneySection } from "@/components/sections/JourneySection";
+import { DarkHeroSection } from "@/components/sections/dark-hero-section";
+import { TrustBar } from "@/components/sections/trust-bar";
+import { ServicesGrid } from "@/components/sections/services-grid";
+import { PricingSection } from "@/components/sections/pricing-section";
+import { FAQAccordionSection } from "@/components/sections/faq-accordion-section";
+import { FinalCTASection } from "@/components/sections/final-cta-section";
+import { JourneySection } from "@/components/sections/journey-section";
 import { AreasSection } from "@/components/sections/AreasSection";
 import { WhyChooseSection } from "@/components/sections/WhyChooseSection";
 import { ProjectsGallerySection } from "@/components/sections/ProjectsGallerySection";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { ContactCTASection } from "@/components/sections/ContactCTASection";
+import TestimonialsSection from "@/components/sections/testimonials-section";
 
 /**
  * Extendia Homepage - Professional AI-First Implementation
@@ -92,34 +97,40 @@ export default function HomePage() {
       />
 
       {/* Main Content */}
-      <main id="main-content" className="min-h-screen">
-        
-        {/* Hero Section - Full viewport height */}
-        <HeroSection />
-        
+      <main id="main-content" className="min-h-screen">          {/* Hero Section - Dark Theme */}
+        <DarkHeroSection />
+        {/* Trust Bar */}
+        <TrustBar />
         {/* Main Content Sections */}
-        <div className="space-y-0">
+        <div className="space-y-0">          {/* Services Grid - Dark Theme */}
+          <ServicesGrid />
+            {/* Pricing Packages */}
+          <PricingSection />
           
-          {/* Services Overview */}
-          <ServicesSection />
+          {/* FAQ Section */}
+          <FAQAccordionSection />
           
           {/* Your Journey Process */}
           <JourneySection />
           
           {/* Areas We Serve */}
           <AreasSection />
-          
-          {/* Why Choose Extendia */}
+            {/* Why Choose Extendia */}
           <WhyChooseSection />
+          
+          {/* Client Testimonials */}
+          <TestimonialsSection />
           
           {/* Recent Projects Gallery */}
           <ProjectsGallerySection />
           
           {/* FAQ Preview */}
           <FAQSection />
-          
-          {/* Contact CTA */}
+            {/* Contact CTA */}
           <ContactCTASection />
+          
+          {/* Final Call to Action */}
+          <FinalCTASection />
           
         </div>
       </main>
