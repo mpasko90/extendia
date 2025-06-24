@@ -1,6 +1,11 @@
 "use client";
 
-import React, { ComponentPropsWithoutRef, useEffect, useRef } from "react";
+import React, {
+  ComponentPropsWithoutRef,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { cn } from "@/lib/utils";
 import styles from "./shimmer-button.module.css";
 
@@ -31,7 +36,20 @@ export const ShimmerButton = React.forwardRef<
     },
     ref,
   ) => {
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
+
+    const setRefs = useCallback(
+      (node: HTMLButtonElement | null) => {
+        buttonRef.current = node;
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+            node;
+        }
+      },
+      [ref],
+    );
 
     useEffect(() => {
       const button = buttonRef.current;
@@ -46,11 +64,7 @@ export const ShimmerButton = React.forwardRef<
 
     return (
       <button
-        ref={(node) => {
-          if (typeof ref === "function") ref(node);
-          else if (ref) ref.current = node;
-          buttonRef.current = node;
-        }}
+        ref={setRefs}
         className={cn(styles.shimmerButton, className)}
         {...props}
       >

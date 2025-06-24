@@ -32,7 +32,7 @@ export const ShimmerButton = React.forwardRef<
     },
     ref,
   ) => {
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
 
     useEffect(() => {
       const button = buttonRef.current;
@@ -48,9 +48,15 @@ export const ShimmerButton = React.forwardRef<
     return (
       <button
         ref={(node) => {
-          if (typeof ref === "function") ref(node);
-          else if (ref) ref.current = node;
-          buttonRef.current = node;
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref) {
+            (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+              node;
+          }
+          if (buttonRef) {
+            buttonRef.current = node;
+          }
         }}
         className={cn(styles.shimmerButton, className)}
         {...props}
