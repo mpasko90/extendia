@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Star, Award, Shield, ThumbsUp, Users, CheckCircle } from 'lucide-react';
+import { Star, Award, Shield, ThumbsUp, Users, Certificate } from 'lucide-react';
 
 interface TrustSignal {
   icon: React.ReactNode;
@@ -27,7 +27,7 @@ const trustSignals: TrustSignal[] = [
     value: '500+ Projects'
   },
   {
-    icon: <CheckCircle className="h-8 w-8 text-accent-orange" />,
+    icon: <Certificate className="h-8 w-8 text-accent-orange" />,
     label: 'Experience',
     value: '15+ Years'
   },

@@ -2,18 +2,15 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Menu, Search, Phone, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Shadcn UI Components
 import { Button } from "@/components/ui/button";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
+  NavigationMenu,  NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import {
@@ -25,15 +22,10 @@ import {
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 
-// Magic UI Components (assuming you have these created in your project)
-// I will create simplified versions for this example.
-const ShimmerButton = ({ children, ...props }: React.ComponentProps<typeof Button>) => (
-  <Button {...props} className={cn(props.className, "animate-shine bg-gradient-to-r from-primary-blue via-white to-primary-blue bg-[length:200%_100%]")}>
-    {children}
-  </Button>
-);
-
-export { ShimmerButton };
+// Magic UI Components
+import { TextAnimate } from "@/components/ui/magic/text-animate";
+import { ShineButton } from "@/components/ui/magic/shine-button";
+import { BorderBeam } from "@/components/ui/magic/border-beam";
 
 const navLinks = [
   { href: "/services", text: "Services" },
@@ -55,17 +47,17 @@ export function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full border-b border-transparent bg-background/95 backdrop-blur-sm transition-all",
+        "sticky top-0 z-50 w-full border-b border-transparent bg-background/95 backdrop-blur-sm transition-all overflow-hidden",
         { "border-b-slate-200": isScrolled }
       )}
     >
-      <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
-        <Link href="/" className="text-2xl font-bold text-primary-blue">
-          Extendia
+      <BorderBeam className="opacity-20" />
+      <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 relative">
+        <Link href="/" className="text-2xl font-bold text-primary-blue group">
+          <TextAnimate words="Extendia" delay={0.2} className="hover:text-green-600 transition-colors" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -83,13 +75,13 @@ export function Header() {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
-          <Badge variant="outline" className="text-accent-orange border-accent-orange">
+          <Badge variant="outline" className="text-accent-orange border-accent-orange hover:bg-accent-orange/10 transition-colors">
             <Phone className="mr-2 h-4 w-4" />
             020 8123 4567
           </Badge>
-          <ShimmerButton>
+          <ShineButton>
             Get Free Quote
-          </ShimmerButton>
+          </ShineButton>
         </div>
 
         {/* Mobile Navigation */}
@@ -105,7 +97,7 @@ export function Header() {
                 <SheetHeader className="flex justify-between items-center mb-6">
                     <SheetTitle asChild>
                         <Link href="/" className="text-2xl font-bold text-primary-blue">
-                            Extendia
+                            <TextAnimate words="Extendia" delay={0.2} />
                         </Link>
                     </SheetTitle>
                     <SheetTrigger asChild>
@@ -126,7 +118,9 @@ export function Header() {
                   ))}
                 </nav>
                 <div className="mt-6 flex flex-col gap-4">
-                    <ShimmerButton className="w-full">Get Free Quote</ShimmerButton>
+                    <ShineButton className="w-full">
+                      Get Free Quote
+                    </ShineButton>
                     <Button variant="outline" className="w-full">
                         <Phone className="mr-2 h-4 w-4" /> Call Us
                     </Button>
