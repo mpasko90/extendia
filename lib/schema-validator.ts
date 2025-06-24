@@ -1,15 +1,23 @@
 import { Schema, sanitize, validate } from 'schema-inspector';
 
-interface ValidationResult {
-  valid: boolean;
-  errors: string[];
+interface ValidationError {
+  property: string;
+  message: string;
+  code?: string;
 }
 
-type SchemaDefinition = {
+interface ValidationResult {
+  valid: boolean;
+  errors: ValidationError[];
+  errorMessages: string[];
+}
+
+type SchemaDefinition = Schema & {
   type: string;
   properties: Record<string, Schema>;
   eq?: string;
   required?: boolean;
+  custom?: (value: unknown) => boolean | string;
 }
 
 const schemaValidators: Record<string, SchemaDefinition> = {

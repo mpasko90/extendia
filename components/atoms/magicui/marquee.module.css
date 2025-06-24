@@ -1,0 +1,41 @@
+.marquee {
+  --duration: 20s;
+  --gap: 1rem;
+  position: relative;
+  display: flex;
+  overflow-x: hidden;
+}
+
+.withPause:hover * {
+  animation-play-state: paused;
+}
+
+.content {
+  flex-shrink: 0;
+}
+
+.reverse * {
+  animation: marquee-reverse var(--duration) linear infinite;
+}
+
+.normal * {
+  animation: marquee var(--duration) linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

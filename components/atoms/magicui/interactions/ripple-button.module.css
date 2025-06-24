@@ -1,0 +1,35 @@
+.rippleButton {
+  --ripple-duration: 1000ms; /* Default duration */
+  position: relative;
+  overflow: hidden;
+  transition: colors;
+}
+
+.rippleButton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, currentColor 1%, transparent 1%);
+  background-position: center;
+  background-size: 15000%;
+  opacity: 0;
+}
+
+.rippleButton:active::after {
+  animation: ripple var(--ripple-duration) cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

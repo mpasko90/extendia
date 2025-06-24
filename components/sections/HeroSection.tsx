@@ -8,7 +8,7 @@ import { BlurFade } from "@/components/ui/blur-fade";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { motion } from "framer-motion";
-import { Star, Award, Calendar } from "lucide-react";
+import { Star, Award } from "lucide-react";
 
 /**
  * Hero section component for the Extendia homepage

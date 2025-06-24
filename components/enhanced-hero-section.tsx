@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/atoms/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
-import { BorderBeam } from "@/components/ui/magic/border-beam";
+import { BorderBeam } from "@/components/atoms/magicui/effects/border-beam";
 import { Star, Award, Clock, Play, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 

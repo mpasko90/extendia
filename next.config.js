@@ -10,11 +10,11 @@ const nextConfig = {
     // Dangerously allow production builds to successfully complete even if
     // your project has type errors.
     // !! WARN !!
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   eslint: {
     // Allow production builds to successfully complete even with ESLint errors
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },  images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [

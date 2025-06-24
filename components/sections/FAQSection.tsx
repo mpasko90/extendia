@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/molecules/accordion/accordion";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { motion } from "framer-motion";
 import { ArrowRight, HelpCircle } from "lucide-react";

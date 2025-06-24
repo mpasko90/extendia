@@ -1,13 +1,5 @@
 import { type Metric } from 'web-vitals';
 
-interface WebVitalMetric {
-  id: string;
-  name: string;
-  value: number;
-  delta: number;
-  entries: PerformanceEntry[];
-}
-
 export function reportWebVitals(metric: Metric): void {
   // Send metrics to your analytics service
   console.log(metric);

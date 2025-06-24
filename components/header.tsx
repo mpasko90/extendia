@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { Button } from "@/components/atoms/ui/button";
 import { 
   Phone, 
   MapPin, 
@@ -12,18 +11,15 @@ import {
   Settings, 
   PhoneCall, 
   Building2, 
-  Wrench, 
-  Zap,
+  Wrench,
   Menu,
   X,
-  Star
+  Zap
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BlurFade } from "@/components/ui/blur-fade";
-import { BorderBeam } from "@/components/ui/magic/border-beam";
-import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
-import { Dock, DockIcon } from "@/components/ui/dock";
-import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import { BlurFade } from "@/components/atoms/animations/blur-fade";
+import { BorderBeam } from "@/components/atoms/magicui/effects/border-beam";
+import { Dock, DockIcon } from "@/components/molecules/dock/dock";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,7 +31,9 @@ export function Header() {
     { name: "Resources", href: "/resources", icon: Settings },
     { name: "About", href: "/about", icon: Users },
     { name: "Contact", href: "/contact", icon: PhoneCall },
-  ];  return (
+  ];  
+
+  return (
     <>
       {/* Skip to main content link for accessibility */}
       <a 
@@ -48,11 +46,11 @@ export function Header() {
       <header className="sticky top-0 backdrop-blur-md bg-white/95 shadow-sm z-50 border-b border-gray-200/50">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           <div className="flex h-20 items-center justify-between">
-            
             {/* Logo Section */}
-            <BlurFade delay={0.1} inView>
+            <BlurFade delay={0.1}>
               <Link href="/" className="flex items-center space-x-4 group" aria-label="Extendia Home">
-                <div className="relative">                  <div className="w-12 h-12 bg-gradient-to-br from-brand-600 to-brand-700 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
+                <div className="relative">
+                  <div className="w-12 h-12 bg-gradient-to-br from-brand-600 to-brand-700 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
                     <Hammer className="h-7 w-7 text-white" />
                   </div>
                   <BorderBeam size={50} duration={8} delay={0} />
@@ -70,7 +68,7 @@ export function Header() {
 
             {/* Centered Navigation with Magic UI Dock - Desktop */}
             <div className="hidden lg:flex items-center justify-center flex-1">
-              <BlurFade delay={0.2} inView>
+              <BlurFade delay={0.2}>
                 <Dock magnification={60} distance={100} className="bg-white/90 backdrop-blur-sm border-gray-200/50 shadow-lg">
                   {navigation.map((item) => (
                     <DockIcon key={item.name} className="bg-white/80 hover:bg-blue-50 border border-gray-200/50 transition-all duration-300">
@@ -93,9 +91,8 @@ export function Header() {
 
             {/* Right Section - Phone Badge & CTA */}
             <div className="flex items-center space-x-4">
-              
               {/* Phone Badge - Always Visible */}
-              <BlurFade delay={0.3} inView>
+              <BlurFade delay={0.3}>
                 <div className="relative group">
                   <Button 
                     asChild 
@@ -120,7 +117,7 @@ export function Header() {
 
               {/* Primary CTA Button - Desktop */}
               <div className="hidden lg:block">
-                <BlurFade delay={0.4} inView>
+                <BlurFade delay={0.4}>
                   <div className="relative">
                     <Button 
                       asChild 
@@ -143,7 +140,7 @@ export function Header() {
 
               {/* Mobile Menu Button */}
               <div className="lg:hidden">
-                <BlurFade delay={0.4} inView>
+                <BlurFade delay={0.4}>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -152,12 +149,11 @@ export function Header() {
                     aria-expanded={isMobileMenuOpen}
                     aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                   >
-                    <motion.div
-                      animate={{ rotate: isMobileMenuOpen ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                    </motion.div>
+                    {isMobileMenuOpen ? (
+                      <X className="h-5 w-5" />
+                    ) : (
+                      <Menu className="h-5 w-5" />
+                    )}
                   </Button>
                 </BlurFade>
               </div>

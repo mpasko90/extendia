@@ -4,11 +4,11 @@ import * as React from "react";
 import Link from "next/link";
 import { Facebook, Instagram, Mail, Phone, MapPin, Youtube, Twitter } from 'lucide-react';
 
-import { Label } from "@/components/ui/label";
-import { List, ListItem } from "@/components/ui/list";
-import { HydrationSafeInput } from "@/components/ui/hydration-safe-input";
-import { RippleButton } from "@/components/ui/magic/ripple-button";
-import { ShineIcon } from "@/components/ui/magic/shine-icon";
+import { Label } from "@/components/atoms/ui/label";
+import { List, ListItem } from "@/components/atoms/ui/list";
+import { HydrationSafeInput } from "@/components/atoms/ui/hydration";
+import { RippleButton } from "@/components/atoms/magicui/interactions/ripple-button";
+import { ShineIcon } from "@/components/atoms/magicui/effects/shine-icon";
 import styles from "./footer.module.css";
 
 // Email subscription form component with enhanced hydration handling

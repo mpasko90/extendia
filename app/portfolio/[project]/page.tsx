@@ -1,9 +1,10 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { Badge } from "@/components/ui/badge";
-import { ArrowLeftIcon } from "lucide-react";
+import { ProjectDetail } from '@/components/project-detail';
+import type { Metadata } from 'next';
+import { ArrowLeftIcon } from '@heroicons/react/24/solid';
+import { notFound } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Badge } from '@/components/ui/badge';
 
 interface ProjectDetail {
   label: string;
@@ -82,55 +83,50 @@ const projects: Project[] = [
     },
 ];
 
-type Params = { project: string };
+type ProjectPageParams = {
+  project: string;
+};
 
-function getProjectData(slug: string): Project | undefined {
-  return projects.find(project => project.slug === slug);
+type ProjectPageProps = {
+  params: Promise<ProjectPageParams>;
+  searchParams?: Record<string, string | string[]>;
+};
+
+export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const currentProject = projects.find((p) => p.slug === resolvedParams.project);
+
+  if (!currentProject) {
+    return {
+      title: 'Project Not Found | Extendia',
+      description: 'The requested project could not be found.',
+    };
+  }
+
+  return {
+    title: `${currentProject.title} | Extendia Portfolio`,
+    description: currentProject.description,
+    openGraph: {
+      title: currentProject.title,
+      description: currentProject.description,
+      images: [{ url: currentProject.imageUrl }],
+    },
+  };
 }
 
-export async function generateStaticParams(): Promise<Params[]> {
+export async function generateStaticParams(): Promise<ProjectPageParams[]> {
   return projects.map((project) => ({
     project: project.slug,
   }));
 }
 
-export async function generateMetadata({
-  params 
-}: {
-  params: Params
-}): Promise<Metadata> {
-  const project = projects.find((p) => p.slug === params.project);
-   
+export default async function ProjectPage({ params }: ProjectPageProps) {
+  const resolvedParams = await params;
+  const project = projects.find((p) => p.slug === resolvedParams.project);
+
   if (!project) {
-    return {
-      title: "Project Not Found",
-      description: "The requested project could not be found."
-    };
-  }
-   
-  return {
-    title: `${project.title} | Extendia Construction Projects`,
-    description: project.description,
-    openGraph: {
-      title: project.title,
-      description: project.description,
-      images: [{ url: project.imageUrl }],
-    },
-  };
-}
-
-export default function ProjectPage({
-  params
-}: {
-  params: Params
-}) {
-  const projectData = getProjectData(params.project);
-
-  if (!projectData) {
     notFound();
   }
-
-  const project = projectData;
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
@@ -146,14 +142,11 @@ export default function ProjectPage({
         <h1 className="text-4xl font-bold mb-4">
           {project.title}
         </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-          {project.description}
-        </p>
       </header>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         <div className="relative aspect-video">
-          <Image
+          <Image 
             src={project.imageUrl}
             alt={`Main image for ${project.title}`}
             fill
@@ -161,36 +154,39 @@ export default function ProjectPage({
             priority
           />
         </div>
+        <div className="space-y-6">
+          <div className="prose dark:prose-invert max-w-none">
+            <p>{project.description}</p>
+          </div>
+          <dl className="grid grid-cols-2 gap-4">
+            {project.details.map((detail) => (
+              <div key={detail.label}>
+                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400">{detail.label}</dt>
+                <dd className="mt-1 text-lg font-semibold">{detail.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
 
-        <div className="space-y-8">
-          {/* Gallery */}
-          <div className="grid grid-cols-2 gap-4">
-            {project.gallery?.map((image, index) => (
-              <div key={index} className="relative aspect-square">
+      {project.gallery && (
+        <section className="mt-16">
+          <h2 className="text-3xl font-bold mb-8 text-center">Project Gallery</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {project.gallery.map((image, index) => (
+              <div key={image} className="relative aspect-video">
                 <Image
                   src={image}
                   alt={`Gallery image ${index + 1} for ${project.title}`}
                   fill
-                  className="object-cover rounded-lg shadow-sm"
+                  className="object-cover rounded-lg shadow-lg"
+                  loading="lazy"
                 />
               </div>
             ))}
           </div>
-
-          {/* Project Details */}
-          <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
-            <h2 className="text-xl font-semibold mb-4">Project Details</h2>
-            <dl className="space-y-4">
-              {project.details.map((detail, index) => (
-                <div key={index} className="flex justify-between">
-                  <dt className="font-medium text-gray-600 dark:text-gray-400">{detail.label}</dt>
-                  <dd>{detail.value}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </div>
-      </div>
+        </section>
+      )}
     </div>
   );
 }

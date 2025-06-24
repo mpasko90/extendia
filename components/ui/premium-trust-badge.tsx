@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { LucideIcon } from "lucide-react";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { BorderBeam } from "@/components/ui/magic/border-beam";
+import { BorderBeam } from "@/components/atoms/magicui/effects/border-beam";
 
 interface PremiumTrustBadgeProps {
   icon: LucideIcon;

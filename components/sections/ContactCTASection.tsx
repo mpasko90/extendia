@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { HydrationSafeInput } from "@/components/ui/hydration-safe-input";
-import { HydrationSafeTextarea } from "@/components/ui/hydration-safe-textarea";
-import { HydrationSafeSelect } from "@/components/ui/hydration-safe-select";
+import { HydrationSafeInput } from "@/components/atoms/ui/hydration";
+import { HydrationSafeTextarea } from "@/components/atoms/ui/hydration";
+import { HydrationSafeSelect } from "@/components/atoms/ui/hydration";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BlurFade } from "@/components/ui/blur-fade";

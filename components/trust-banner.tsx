@@ -1,6 +1,6 @@
 "use client";
 
-import { BorderBeam } from "@/components/ui/magic/border-beam";
+import { BorderBeam } from "@/components/atoms/magicui/effects/border-beam";
 import Marquee from "@/components/ui/marquee";
 import { Shield, Award, Star, Clock } from "lucide-react";
 

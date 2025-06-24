@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/components/atoms/ui/separator";
 
 export default function PrivacyPolicyPage() {
   return (
@@ -15,7 +15,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="prose prose-lg dark:prose-invert">
           <p>
-            Extendia Ltd. ("us", "we", or "our") operates the https://www.extendia.co.uk website (the "Service").
+            Extendia Ltd. (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;) operates the https://www.extendia.co.uk website (the &quot;Service&quot;).
           </p>
           <p>
             This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.
