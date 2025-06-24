@@ -113,6 +113,40 @@ This document provides the core implementation standards for the Extendia Next.j
 
 ---
 
+## 11. Audit of Icon Dependencies
+
+This section outlines the recent audit of Heroicons usage and the proposed migration to Shadcn UI and Magic UI for a streamlined icon strategy.
+
+1. **Review of Dependencies**
+   - The project currently imports icons from Heroicons alongside Shadcn UI and Magic UI, creating redundancy and inconsistent styling.
+
+2. **Identified Issues with Heroicons**
+   - **Redundancy**: Heroicons contains many icons that are duplicated in Shadcn UI’s icon set.
+   - **Styling Inconsistency**: Heroicons do not automatically inherit Magic UI animations or Shadcn theming, requiring additional wrappers.
+   - **Bundle Impact**: Unused Heroicons exports can remain in the bundle, affecting performance metrics such as LCP and FID.
+
+3. **Recommendations**
+   1. **Remove Heroicons Dependency**
+      - Uninstall `@heroicons/react` if no unique icons remain.
+      - Use Shadcn UI’s `Icons` library or Magic UI utilities for all icon requirements.
+   2. **Update Icon Imports**
+      - Refactor all Heroicons imports to use Shadcn UI components.
+      - Apply Magic UI hover/shimmer effects directly on Shadcn UI icons for interactive consistency.
+   3. **Verify Visual Consistency**
+      - Conduct a review of icon sizes, colors, and animations across light and dark modes without custom CSS overrides.
+
+4. **Action Plan**
+
+| Step | Task                                                      | Owner | ETA   |
+|------|-----------------------------------------------------------|-------|-------|
+| 1    | Audit codebase for Heroicons imports                      | Dev   | 0.5d  |
+| 2    | Remove `@heroicons/react` and unused icon files           | Dev   | 0.5d  |
+| 3    | Refactor imports to Shadcn UI `Icons`                     | Dev   | 1d    |
+| 4    | Apply Magic UI animations to replaced icons               | Dev   | 0.5d  |
+| 5    | QA test for visual consistency and performance benchmarks | QA    | 1d    |
+
+---
+
 **All contributors must adhere to these instructions.  
 For any new feature or section, always check and update the relevant documentation in `/docs`.**
 
