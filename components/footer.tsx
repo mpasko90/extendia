@@ -4,11 +4,10 @@ import * as React from "react";
 import Link from "next/link";
 import { Facebook, Instagram, Home } from 'lucide-react';
 
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { List, ListItem } from "@/components/ui/list";
+import { HydrationSafeInput } from "@/components/ui/hydration-safe-input";
 
 // Email subscription form component with enhanced hydration handling
 const EmailSubscriptionForm = () => {
@@ -47,7 +46,7 @@ const EmailSubscriptionForm = () => {
       <div className="grid gap-1.5 w-full">
         <Label htmlFor={inputId}>Subscribe to our newsletter</Label>
         <div className="flex space-x-2">
-          <Input
+          <HydrationSafeInput
             id={inputId}
             type="email"
             placeholder="Your email"
@@ -55,7 +54,6 @@ const EmailSubscriptionForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            suppressHydrationWarning
           />
           <Button type="submit">Subscribe</Button>
         </div>

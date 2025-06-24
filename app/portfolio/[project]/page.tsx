@@ -82,29 +82,24 @@ const projects: Project[] = [
     },
 ];
 
+type Params = { project: string };
+
 function getProjectData(slug: string): Project | undefined {
   return projects.find(project => project.slug === slug);
 }
 
-// Generate static params for all projects
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<Params[]> {
   return projects.map((project) => ({
     project: project.slug,
   }));
 }
 
-// Generate metadata for the page with proper Promise handling
 export async function generateMetadata({
-  params: rawParams 
+  params 
 }: {
-  params: { project: Promise<string> | string }
+  params: Params
 }): Promise<Metadata> {
-  // Handle both Promise and direct string values
-  const projectParam = typeof rawParams.project === 'string' 
-    ? rawParams.project 
-    : await rawParams.project;
-    
-  const project = projects.find((p) => p.slug === projectParam);
+  const project = projects.find((p) => p.slug === params.project);
    
   if (!project) {
     return {
@@ -124,25 +119,18 @@ export async function generateMetadata({
   };
 }
 
-// The page component with proper Next.js 15 async params handling
-export default async function ProjectPage({
-  params: rawParams
+export default function ProjectPage({
+  params
 }: {
-  params: { project: Promise<string> | string }
+  params: Params
 }) {
-  // Handle both Promise and direct string values
-  const projectParam = typeof rawParams.project === 'string' 
-    ? rawParams.project 
-    : await rawParams.project;
-    
-  const projectData = getProjectData(projectParam);
+  const projectData = getProjectData(params.project);
 
   if (!projectData) {
     notFound();
   }
 
-  // After notFound(), projectData is guaranteed to be defined
-  const project: Project = projectData;
+  const project = projectData;
 
   return (
     <div className="container mx-auto px-4 py-12 md:px-6 lg:py-16">
