@@ -66,12 +66,3 @@ Page-level layouts:
 3. Include prop type definitions
 4. Write unit tests for components
 5. Follow accessibility guidelines
-
-## Recent Updates
-
-### Heroicons Compatibility
-- Installed Heroicons v1 to resolve version mismatch.
-
-### Component Fixes
-- Updated `marquee.tsx` to support additional `direction` types.
-- Improved error handling in `schema-validator.ts`.

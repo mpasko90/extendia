@@ -197,16 +197,3 @@ export function HowItWorksSection() {
 - **Enhanced brand visibility** in AI summaries vs competitors
 
 This strategy positions Extendia not only in traditional SEO but also in the emerging AI search landscape, where **84% of marketers already use AI for content alignment with search intent**.
-
-## Recent Updates
-
-### Next.js 15 Migration
-- Updated dynamic routes to handle asynchronous `params`.
-- Fixed compatibility issues with Heroicons v1.
-
-### TypeScript Fixes
-- Resolved type errors in `marquee.tsx` and `schema-validator.ts`.
-- Added custom type declarations for missing modules.
-
-### Build Success
-- Verified successful compilation and static page generation.
