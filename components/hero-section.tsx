@@ -11,7 +11,7 @@ import { ShimmerButton } from "@/components/ui/shimmer-button";
  */
 export function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] lg:min-h-screen flex items-center justify-center">
+    <section className="relative min-h-[80vh] lg:min-h-[85vh] flex items-center justify-center rounded-2xl overflow-hidden shadow-2xl">
       {/* Background with fallback and loading animation */}
       <div className="absolute inset-0">
         <video
@@ -46,8 +46,7 @@ export function HeroSection() {
         </BlurFade>
 
         <BlurFade delay={0.75} inView>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <ShimmerButton className="shadow-2xl">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">            <ShimmerButton className="shadow-2xl" shimmerColor="#f59e0b">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-lg">
                 Get a Free Quote
               </span>

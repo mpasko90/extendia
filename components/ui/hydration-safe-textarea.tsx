@@ -18,14 +18,18 @@ import { Textarea } from "./textarea";
 export const HydrationSafeTextarea = forwardRef<HTMLTextAreaElement, React.ComponentProps<"textarea">>(
   (props, forwardedRef) => {
     const localRef = useRef<HTMLTextAreaElement>(null);
-    const textareaRef = (forwardedRef || localRef) as React.RefObject<HTMLTextAreaElement>;
-
-    useEffect(() => {
-      // Clean up Next.js development attributes to prevent hydration mismatches
+    const textareaRef = (forwardedRef || localRef) as React.RefObject<HTMLTextAreaElement>;    useEffect(() => {
+      // Clean up browser extension attributes to prevent hydration mismatches
       if (textareaRef.current) {
         textareaRef.current.removeAttribute('data-np-intersection-state');
+        textareaRef.current.removeAttribute('data-np-checked');
+        // Remove other common browser extension attributes
+        textareaRef.current.removeAttribute('data-dashlane-rid');
+        textareaRef.current.removeAttribute('data-form-type');
+        textareaRef.current.removeAttribute('data-lpignore');
+        textareaRef.current.removeAttribute('data-1p-ignore');
       }
-    }, [textareaRef]); // Include textareaRef in dependencies
+    }, [textareaRef]);
 
     return <Textarea ref={textareaRef} {...props} />;
   }

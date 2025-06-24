@@ -19,14 +19,18 @@ import { Input } from "./input";
 export const HydrationSafeInput = forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   (props, forwardedRef) => {
     const localRef = useRef<HTMLInputElement>(null);
-    const inputRef = (forwardedRef || localRef) as React.RefObject<HTMLInputElement>;
-
-    useEffect(() => {
-      // Clean up Next.js development attributes to prevent hydration mismatches
+    const inputRef = (forwardedRef || localRef) as React.RefObject<HTMLInputElement>;    useEffect(() => {
+      // Clean up browser extension attributes to prevent hydration mismatches
       if (inputRef.current) {
         inputRef.current.removeAttribute('data-np-intersection-state');
+        inputRef.current.removeAttribute('data-np-checked');
+        // Remove other common browser extension attributes
+        inputRef.current.removeAttribute('data-dashlane-rid');
+        inputRef.current.removeAttribute('data-form-type');
+        inputRef.current.removeAttribute('data-lpignore');
+        inputRef.current.removeAttribute('data-1p-ignore');
       }
-    }, [inputRef]); // Include inputRef in dependencies
+    }, [inputRef]);
 
     return <Input ref={inputRef} {...props} />;
   }
